@@ -1,21 +1,17 @@
-# app.py
 from flask import Flask, request, render_template_string, abort
 from pathlib import Path
 import os
 
-# CONFIG (env-driven)
 BIND_IP = os.getenv("BIND_IP", "0.0.0.0")
 PORT = int(os.getenv("PORT", 8085))
 REQUIRE_TOKEN = os.getenv("REQUIRE_TOKEN", "true").lower() == "true"
 TOKEN = os.getenv("PHONE_DROP_TOKEN", "token")
 
-# New: dual targets from env
 WINDOWS_TARGET_DIR = Path(
-    os.getenv("WINDOWS_TARGET_DIR", "/mnt/c/Users/jon/Desktop/phone-drop")
+    os.getenv("WINDOWS_TARGET_DIR", str(HOME / "share"))
 )
-WSL_TARGET_DIR = Path(os.getenv("WSL_TARGET_DIR", "/home/jon/phone-drop/files"))
+WSL_TARGET_DIR = Path(os.getenv("WSL_TARGET_DIR", str(HOME / "share")))
 
-# Ensure both exist (best-effort)
 WINDOWS_TARGET_DIR.mkdir(parents=True, exist_ok=True)
 WSL_TARGET_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -78,21 +74,18 @@ PAGE = """
 """
 
 def sanitize_filename(name: str) -> str:
-    # Simple, opinionated sanitizer to avoid path traversal and weird chars
     name = name.strip().replace("\\", "/")
-    name = name.split("/")[-1]  # basename only
+    name = name.split("/")[-1]
     allowed = "".join(ch for ch in name if ch.isalnum() or ch in "._- ")
     return allowed[:128] if allowed else "untitled.txt"
 
 def resolve_target(choice: str) -> Path:
     if (choice or "").lower() == "wsl":
         return WSL_TARGET_DIR
-    # default to windows
     return WINDOWS_TARGET_DIR
 
 @app.get("/")
 def index_get():
-    # Default choice = windows
     choice = "windows"
     target_dir = resolve_target(choice)
     return render_template_string(
