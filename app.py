@@ -22,7 +22,7 @@ PAGE = """
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>WSL Text Drop</title>
+    <title>Local Drop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       body { font-family: system-ui, sans-serif; margin: 24px; max-width: 720px; }
@@ -38,7 +38,7 @@ PAGE = """
     </style>
   </head>
   <body>
-    <h1>WSL Text Drop</h1>
+    <h1>Local Drop</h1>
     {% if message %}
       <p class="{{'ok' if ok else 'err'}}">{{ message }}</p>
     {% endif %}
