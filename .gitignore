@@ -33,9 +33,10 @@ Thumbs.db
 # Logs
 *.log
 
-# Local systemd unit (if you keep a copy here)
+# Local systemd unit
 *.service
 
-# Local env files (if you ever add them)
+# Local env files
 .env
 .env.*
+!.env.example
