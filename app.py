@@ -7,10 +7,12 @@ PORT = int(os.getenv("PORT", 8085))
 REQUIRE_TOKEN = os.getenv("REQUIRE_TOKEN", "true").lower() == "true"
 TOKEN = os.getenv("PHONE_DROP_TOKEN", "token")
 
+HOME = Path.home()
+
 WINDOWS_TARGET_DIR = Path(
-    os.getenv("WINDOWS_TARGET_DIR", str(HOME / "share"))
+    os.getenv("WINDOWS_TARGET_DIR", str(HOME / "share" / "windows"))
 )
-WSL_TARGET_DIR = Path(os.getenv("WSL_TARGET_DIR", str(HOME / "share")))
+WSL_TARGET_DIR = Path(os.getenv("WSL_TARGET_DIR", str(HOME / "share" / "wsl")))
 
 WINDOWS_TARGET_DIR.mkdir(parents=True, exist_ok=True)
 WSL_TARGET_DIR.mkdir(parents=True, exist_ok=True)
