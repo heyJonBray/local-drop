@@ -6,7 +6,7 @@ Extremely lightweight Flask app to drop text from your phone to your machine ove
 - Paste text, choose filename, write/append
 - Two target directories via dropdown (configured with env vars)
 - Optional token to prevent drive‑by writes
-- Single Python process with negligible resource usage
+- Single Python process; ~20M RAM; near-zero CPU
 
 ---
 
